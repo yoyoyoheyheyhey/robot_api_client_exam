@@ -5,3 +5,4 @@ git_source(:github) do |repo_name|
 end
 
 gem 'faraday'
+gem "rspec", ">= 3.0.0"
