@@ -1,3 +1,4 @@
 .history
 *.swp
 examples.txt
+.env
