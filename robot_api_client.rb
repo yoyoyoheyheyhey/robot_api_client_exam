@@ -4,13 +4,8 @@ require 'csv'
 
 class RobotApiClient
   def get_language(data_format, id, pass)
-    begin
-      response = connection(id, pass).get("/programLanguages")
-    rescue Faraday::ClientError => e
-      raise Unauthorized, e.message
-    end
-
-    hash = JSON.parse(response.body)
+    connection = connection(id, pass)
+    hash = hash(connection)
 
     case data_format
     when "json" then 
@@ -36,6 +31,16 @@ class RobotApiClient
       connection.response :raise_error
       connection.adapter Faraday.default_adapter
     end
+  end
+
+  def hash(connection)
+    begin
+      response = connection.get("/programLanguages")
+    rescue Faraday::ClientError => e
+      raise Unauthorized, e.message
+    end
+
+    return JSON.parse(response.body)
   end
 end
 
