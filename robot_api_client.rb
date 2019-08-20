@@ -13,23 +13,23 @@ class RobotApiClient
     when "json" then 
       json_str = JSON.pretty_generate(hash)
       puts json_str
-      return json_str
     when "csv" then
       csv_str = CSV.generate do |csv|
         csv << hash[0].keys
         hash.each { |hash| csv << hash.values}
       end
       puts csv_str
-      return csv_str
     else
-      raise DataFormatError, "choose only json or csv"
+      puts "Please specify the data format from json or csv"
+      exit 1
     end
   end
 
   private
   def connection(id, pass)
     unless id == ENV['ID'] && pass == ENV['PASS']
-      raise Unauthorized, "You have entered an invalid id or password"
+      puts "You have entered an invalid id or password"
+      exit 1
     end
 
     Faraday.new(url: "https://robot.diveintocode.jp:17777") do |connection|
@@ -41,14 +41,14 @@ class RobotApiClient
 
   def hash(connection)
     response = connection.get("/programLanguages")
-    return JSON.parse(response.body)
+    JSON.parse(response.body)
   end
 end
 
-class Unauthorized < StandardError; end
-class DataFormatError < StandardError; end
-
 if $0 == __FILE__
-  raise ArgumentError, "Usage: ruby robot_api_client.rb <data format(json|csv)> <id> <pass>" unless ARGV.length == 3
+  unless ARGV.length == 3
+    puts "Usage: ruby robot_api_client.rb < json | csv > <id> <pass>" 
+    exit 1
+  end
   RobotApiClient.new.get_language(ARGV[0], ARGV[1], ARGV[2])
 end
