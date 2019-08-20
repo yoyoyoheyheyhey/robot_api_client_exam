@@ -1,6 +1,8 @@
 require 'faraday'
 require 'json'
 require 'csv'
+require 'dotenv'
+Dotenv.load
 
 class RobotApiClient
   def get_language(data_format, id, pass)
@@ -26,6 +28,10 @@ class RobotApiClient
 
   private
   def connection(id, pass)
+    unless id == ENV['ID'] && pass == ENV['PASS']
+      raise Unauthorized, "You have entered an invalid id or password"
+    end
+
     Faraday.new(url: "https://robot.diveintocode.jp:17777") do |connection|
       connection.use Faraday::Request::BasicAuthentication, id, pass
       connection.response :raise_error
@@ -34,12 +40,7 @@ class RobotApiClient
   end
 
   def hash(connection)
-    begin
-      response = connection.get("/programLanguages")
-    rescue Faraday::ClientError => e
-      raise Unauthorized, e.message
-    end
-
+    response = connection.get("/programLanguages")
     return JSON.parse(response.body)
   end
 end
