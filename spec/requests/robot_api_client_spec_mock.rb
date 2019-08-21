@@ -68,7 +68,6 @@ RSpec.describe RobotApiClient do
 
       it "エラーなく言語一覧を取得する(JSON)" do
         expect(robot_api_client.get_language("json", id, pass)).to match(json_str_result)
-        
       end
 
       it "エラーなく言語一覧を取得する(CSV)" do
