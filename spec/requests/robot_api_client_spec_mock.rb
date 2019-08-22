@@ -75,37 +75,36 @@ RSpec.describe RobotApiClient do
       end
     end
 
-    context "異常系" do
-      it "IDとパスワードが不適切なら言語一覧を取得できない" do
-        #json
-        allow(robot_api_client).to receive(:get_language).with("json", "other_than_id", pass).and_raise(SystemExit)
-        allow(robot_api_client).to receive(:get_language).with("json", id, "other_than_pass").and_raise(SystemExit)
-        allow(robot_api_client).to receive(:get_language).with("json", "other_than_id", "other_than_pass").and_raise(SystemExit)
+    # context "異常系" do
+    #   it "IDとパスワードが不適切なら言語一覧を取得できない" do
+    #     #json
+    #     allow(robot_api_client).to receive(:get_language).with("json", "other_than_id", pass).and_raise(SystemExit)
+    #     allow(robot_api_client).to receive(:get_language).with("json", id, "other_than_pass").and_raise(SystemExit)
+    #     allow(robot_api_client).to receive(:get_language).with("json", "other_than_id", "other_than_pass").and_raise(SystemExit)
 
-        expect{ robot_api_client.get_language("json", "other_than_id", pass) }.to raise_error(SystemExit)
-        expect{ robot_api_client.get_language("json", id, "other_than_pass") }.to raise_error(SystemExit)
-        expect{ robot_api_client.get_language("json", "other_than_id", "other_than_pass") }.to raise_error(SystemExit)
+    #     expect{ robot_api_client.get_language("json", "other_than_id", pass) }.to raise_error(SystemExit)
+    #     expect{ robot_api_client.get_language("json", id, "other_than_pass") }.to raise_error(SystemExit)
+    #     expect{ robot_api_client.get_language("json", "other_than_id", "other_than_pass") }.to raise_error(SystemExit)
 
-        #csv
-        allow(robot_api_client).to receive(:get_language).with("csv", "other_than_id", pass).and_raise(SystemExit)
-        allow(robot_api_client).to receive(:get_language).with("csv", id, "other_than_pass").and_raise(SystemExit)
-        allow(robot_api_client).to receive(:get_language).with("csv", "other_than_id", "other_than_pass").and_raise(SystemExit)
+    #     #csv
+    #     allow(robot_api_client).to receive(:get_language).with("csv", "other_than_id", pass).and_raise(SystemExit)
+    #     allow(robot_api_client).to receive(:get_language).with("csv", id, "other_than_pass").and_raise(SystemExit)
+    #     allow(robot_api_client).to receive(:get_language).with("csv", "other_than_id", "other_than_pass").and_raise(SystemExit)
 
-        expect{ robot_api_client.get_language("csv", "other_than_id", pass) }.to raise_error(SystemExit)
-        expect{ robot_api_client.get_language("csv", id, "other_than_pass") }.to raise_error(SystemExit)
-        expect{ robot_api_client.get_language("csv", "other_than_id", "other_than_pass") }.to raise_error(SystemExit)
-      end
+    #     expect{ robot_api_client.get_language("csv", "other_than_id", pass) }.to raise_error(SystemExit)
+    #     expect{ robot_api_client.get_language("csv", id, "other_than_pass") }.to raise_error(SystemExit)
+    #     expect{ robot_api_client.get_language("csv", "other_than_id", "other_than_pass") }.to raise_error(SystemExit)
+    #   end
 
-      it "JSONとCSV以外のデータ形式を指定すると言語一覧を取得できない" do
-        allow(robot_api_client).to receive(:get_language).with("unwanted_data_format", id, pass).and_raise(SystemExit)
+    #   it "JSONとCSV以外のデータ形式を指定すると言語一覧を取得できない" do
+    #     allow(robot_api_client).to receive(:get_language).with("unwanted_data_format", id, pass).and_raise(SystemExit)
 
-        expect{ robot_api_client.get_language("unwanted_data_format", id, pass) }.to raise_error(SystemExit)
-      end
+    #     expect{ robot_api_client.get_language("unwanted_data_format", id, pass) }.to raise_error(SystemExit)
+    #   end
 
-      it "引数の数が不適切なら言語一覧を取得できない" do
-        expect{ robot_api_client.get_language(id, pass) }.to raise_error(ArgumentError)
-      end
-    end
-    
+    #   it "引数の数が不適切なら言語一覧を取得できない" do
+    #     expect{ robot_api_client.get_language(id, pass) }.to raise_error(ArgumentError)
+    #   end
+    # end
   end
 end
