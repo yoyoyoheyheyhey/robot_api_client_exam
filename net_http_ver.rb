@@ -1,4 +1,3 @@
-
 require 'net/http'
 require 'uri'
 require 'json'
@@ -30,4 +29,6 @@ def output_language(data_format, hash)
   end
 end
 
-output_language(ARGV[0], get_language(ARGV[1], ARGV[2]))
+if $0 == __FILE__
+  output_language(ARGV[0], get_language(ARGV[1], ARGV[2]))
+end
