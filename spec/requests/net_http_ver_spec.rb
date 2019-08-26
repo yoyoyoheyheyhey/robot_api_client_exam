@@ -9,13 +9,16 @@ RSpec.describe 'robot_api_client' do
   let(:pass) { ENV['PASS'] }
 
   describe '言語一覧を取得すること' do  
-    HASH = [{"code":"ruby","displayName":"Ruby"},{"code":"python","displayName":"Python"},{"code":"java","displayName":"Java"}]
-    HASH.freeze
-    let(:json_str) { JSON.pretty_generate(HASH) }
+    let(:hash) do
+      [{"code":"ruby","displayName":"Ruby"},
+       {"code":"python","displayName":"Python"},
+       {"code":"java","displayName":"Java"}]
+    end
+    let(:json_str) { JSON.pretty_generate(hash) }
     let(:csv_str) do
       CSV.generate do |csv|
-        csv << HASH[0].keys
-        HASH.each { |hash| csv << hash.values }
+        csv << hash[0].keys
+        hash.each { |hash| csv << hash.values }
       end
     end
     
